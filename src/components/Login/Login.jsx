@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { useAuthContext } from '../../context/AuthContext/useAuthContext';
 
-const userInitialState = { name: '', email: '', pass: '' };
+const userInitialState = { name: '', email: '', password: '' };
 
 function Login() {
-  const [user, setUser] = useState(userInitialState);
-  const { login } = useAuthContext();
+  const [userForm, setUser] = useState(userInitialState);
+  const { user, login } = useAuthContext();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUser({ ...userForm, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(user.name);
+    login(userForm.name, userForm.password);
     setUser(userInitialState);
   };
 
@@ -23,7 +23,7 @@ function Login() {
       <input
         type='text'
         name='name'
-        value={user.name}
+        value={userForm.name}
         onChange={handleChange}
         placeholder='Ingresa tu nombre'
         required
@@ -31,15 +31,15 @@ function Login() {
       <input
         type='email'
         name='email'
-        value={user.email}
+        value={userForm.email}
         onChange={handleChange}
         placeholder='Ingresa tu email'
         required
       />
       <input
         type='password'
-        name='pass'
-        value={user.pass}
+        name='password'
+        value={userForm.password}
         onChange={handleChange}
         placeholder='Ingresa tu contraseña'
         required

@@ -4,18 +4,20 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import Login from './components/Login/Login';
-import AuthProvider from './context/AuthContext/AuthProvider';
 import Cart from './components/Cart/Cart';
-import ProtectedRoute from './components/ProtectedRoute';
+import RutaProtegida from './components/RutaProtegida';
+import ProductFormContainer from './components/adminComponents/ProductFormContainer/ProductFormContainer';
+import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <AuthProvider>
-          <CartProvider>
-            <Header />
-            <Routes>
+        <CartProvider>
+          <Header />
+          <Routes>
+            <Route element={<MainLayout />}>
               <Route
                 path='/'
                 element={<ItemListContainer titulo='Bienvenidos' />}
@@ -23,16 +25,27 @@ function App() {
               <Route
                 path='/carrito'
                 element={
-                  <ProtectedRoute>
+                  <RutaProtegida>
                     <Cart />
-                  </ProtectedRoute>
+                  </RutaProtegida>
                 }
               />
-              <Route path='/login' element={<Login />} />
-            </Routes>
-            <Footer />
-          </CartProvider>
-        </AuthProvider>
+            </Route>
+
+            <Route path='/admin' element={<AdminLayout />}>
+              <Route index element={<Login />} />
+              <Route
+                path='/alta-productos'
+                element={
+                  <RutaProtegida>
+                    <ProductFormContainer />
+                  </RutaProtegida>
+                }
+              />
+            </Route>
+          </Routes>
+          <Footer />
+        </CartProvider>
       </BrowserRouter>
     </>
   );

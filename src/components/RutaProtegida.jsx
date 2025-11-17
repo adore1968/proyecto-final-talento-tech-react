@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext/useAuthContext';
 
-function ProtectedRoute({ children }) {
+function RutaProtegida({ children }) {
   const { loading, user } = useAuthContext();
 
   if (loading) {
@@ -13,10 +13,10 @@ function ProtectedRoute({ children }) {
   }
 
   if (!user) {
-    return <Navigate to='/login' />;
+    return <Navigate to='/login' replace />;
   }
 
   return children;
 }
 
-export default ProtectedRoute;
+export default RutaProtegida;

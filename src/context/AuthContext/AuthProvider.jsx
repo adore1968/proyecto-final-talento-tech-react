@@ -5,20 +5,26 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const login = (username) => {
-    const token = `fake-token-${username}`;
-    localStorage.setItem('authToken', token);
-    setUser(username);
+  const login = (name, password) => {
+    if (name === 'admin' && password === '1234') {
+      const session = { name };
+      setUser(session);
+      sessionStorage.setItem('session', JSON.stringify(session));
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('session');
     setUser(null);
   };
 
   useEffect(() => {
-    const user = localStorage.getItem('authToken');
-    setUser(user);
+    const user = sessionStorage.getItem('session');
+    if (user) {
+      setUser(JSON.parse(user));
+    } else {
+      setUser(null);
+    }
     setLoading(false);
   }, []);
 
