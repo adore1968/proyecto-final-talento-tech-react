@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { useAuthContext } from '../../context/AuthContext/useAuthContext';
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context/AuthContext/useAuthContext";
+import { Navigate } from "react-router-dom";
 
-const userInitialState = { name: '', email: '', password: '' };
+const userInitialState = { name: "", email: "", password: "" };
 
 function Login() {
   const [userForm, setUser] = useState(userInitialState);
@@ -18,33 +19,37 @@ function Login() {
     setUser(userInitialState);
   };
 
+  if (user) {
+    return <Navigate to="/admin/alta-productos" />;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type='text'
-        name='name'
+        type="text"
+        name="name"
         value={userForm.name}
         onChange={handleChange}
-        placeholder='Ingresa tu nombre'
+        placeholder="Ingresa tu nombre"
         required
       />
       <input
-        type='email'
-        name='email'
+        type="email"
+        name="email"
         value={userForm.email}
         onChange={handleChange}
-        placeholder='Ingresa tu email'
+        placeholder="Ingresa tu email"
         required
       />
       <input
-        type='password'
-        name='password'
+        type="password"
+        name="password"
         value={userForm.password}
         onChange={handleChange}
-        placeholder='Ingresa tu contraseña'
+        placeholder="Ingresa tu contraseña"
         required
       />
-      <button type='submit'>Enviar</button>
+      <button type="submit">Enviar</button>
     </form>
   );
 }

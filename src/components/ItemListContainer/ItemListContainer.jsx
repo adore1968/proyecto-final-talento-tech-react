@@ -1,37 +1,18 @@
-import { useEffect, useState } from 'react';
-import ItemList from '../ItemList/ItemList';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import ItemList from "../ItemList/ItemList";
+import { useParams } from "react-router-dom";
+import { getProducts } from "../../services/products";
 
 function ItemListContainer({ titulo }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { category } = useParams();
 
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch(
-        'https://690cdcfca6d92d83e84fba06.mockapi.io/productos'
-      );
-
-      if (!res.ok) {
-        throw new Error('Hubo un problema al buscar productos');
-      }
-
-      const data = await res.json();
-      if (category) {
-        setProducts(data.filter((prod) => prod.category === category));
-      } else {
-        setProducts(data);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchProducts();
+    getProducts(category)
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   }, [category]);
 
   if (loading) {
