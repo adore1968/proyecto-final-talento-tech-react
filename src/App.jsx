@@ -11,6 +11,8 @@ import MainLayout from "./layouts/MainLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import ItemDetail from "./components/ItemDetail/ItemDetail";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -21,6 +23,10 @@ function App() {
             <Route element={<MainLayout />}>
               <Route
                 path="/"
+                element={<ItemListContainer titulo="Bienvenidos" />}
+              />
+              <Route
+                path="/category/:category"
                 element={<ItemListContainer titulo="Bienvenidos" />}
               />
               <Route path="/detail/:id" element={<ItemDetailContainer />} />
@@ -44,11 +50,28 @@ function App() {
                   </RutaProtegida>
                 }
               />
+              <Route
+                path="alta-productos/:id"
+                element={
+                  <RutaProtegida>
+                    <ProductFormContainer />
+                  </RutaProtegida>
+                }
+              />
             </Route>
           </Routes>
           <Footer />
         </CartProvider>
       </BrowserRouter>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        hideProgressBar={false}
+        pauseOnFocusLoss
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 }

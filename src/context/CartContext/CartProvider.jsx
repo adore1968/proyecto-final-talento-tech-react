@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CartContext } from "./CartContext";
+import { showSuccess } from "../../utils/toast";
 
 function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
@@ -19,17 +20,17 @@ function CartProvider({ children }) {
         }
       });
       setCart(updatedCart);
-      alert("Agregado al carrito");
+      showSuccess("Agregado al carrito");
     } else {
       setCart([...cart, item]);
-      alert(`${item.name} agregado`);
+      showSuccess(`${item.name} agregado`);
     }
   };
 
   const deleteItem = (id) => {
     const filtered = cart.filter((p) => p.id !== id);
     setCart(filtered);
-    alert("Producto eliminado");
+    showSuccess("Producto eliminado");
   };
 
   const clearCart = () => {
@@ -55,7 +56,7 @@ function CartProvider({ children }) {
     const ok = confirm("¿Desea finalizar la compra?");
 
     if (ok) {
-      alert("¡Compra realizada con exito!");
+      showSuccess("¡Compra realizada con exito!");
       clearCart();
     }
   };

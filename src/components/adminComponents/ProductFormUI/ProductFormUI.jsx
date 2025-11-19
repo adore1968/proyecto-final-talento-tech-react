@@ -5,6 +5,7 @@ function ProductFormUI({
   onChange,
   onFileChange,
   onSubmit,
+  id,
 }) {
   if (loading) {
     return (
@@ -16,73 +17,73 @@ function ProductFormUI({
 
   return (
     <section>
-      <form className='product-form' onSubmit={onSubmit}>
-        <h2>Agregar Producto</h2>
+      <form className="product-form" onSubmit={onSubmit}>
+        <h2>{id ? "Actualizar" : "Agregar"} Producto</h2>
         <div>
-          <label htmlFor='name'>Nombre:</label>
+          <label htmlFor="name">Nombre:</label>
           <input
-            type='text'
-            name='name'
-            id='name'
+            type="text"
+            name="name"
+            id="name"
             value={product.name}
             onChange={onChange}
             required
           />
-          {errors.name && <p className='error'>{errors.name}</p>}
+          {errors.name && <p className="error">{errors.name}</p>}
         </div>
 
         <div>
-          <label htmlFor='price'>Precio:</label>
+          <label htmlFor="price">Precio:</label>
           <input
-            type='number'
-            name='price'
-            id='price'
+            type="number"
+            name="price"
+            id="price"
             value={product.price}
             onChange={onChange}
             required
           />
-          {errors.price && <p className='error'>{errors.price}</p>}
+          {errors.price && <p className="error">{errors.price}</p>}
         </div>
 
         <div>
-          <label htmlFor='category'>Categoria:</label>
+          <label htmlFor="category">Categoria:</label>
           <input
-            type='text'
-            name='category'
-            id='category'
+            type="text"
+            name="category"
+            id="category"
             value={product.category}
             onChange={onChange}
             required
           />
-          {errors.category && <p className='error'>{errors.category}</p>}
+          {errors.category && <p className="error">{errors.category}</p>}
         </div>
 
         <div>
-          <label htmlFor='description'>Descripcion:</label>
+          <label htmlFor="description">Descripcion:</label>
           <textarea
-            name='description'
-            id='description'
+            name="description"
+            id="description"
             value={product.description}
             onChange={onChange}
             required
           ></textarea>
-          {errors.description && <p className='error'>{errors.description}</p>}
+          {errors.description && <p className="error">{errors.description}</p>}
         </div>
 
         <div>
-          <label htmlFor='file'>Imagen:</label>
+          <label htmlFor="file">Imagen:</label>
           <input
-            type='file'
-            name='file'
-            id='file'
-            accept='image/*'
+            type="file"
+            name="file"
+            id="file"
+            accept="image/*"
             onChange={(e) => onFileChange(e.target.files?.[0] ?? null)}
           />
-          {errors.file && <p className='error'>{errors.file}</p>}
+          {errors.file && <p className="error">{errors.file}</p>}
         </div>
 
-        <button className='btn' type='submit' disabled={loading}>
-          {loading ? 'Guardando...' : 'Guardar'}
+        <button className="btn" type="submit" disabled={loading}>
+          {loading ? "Guardando..." : "Guardar"}
         </button>
       </form>
     </section>

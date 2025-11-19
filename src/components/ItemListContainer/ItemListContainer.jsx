@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ItemList from "../ItemList/ItemList";
 import { useParams } from "react-router-dom";
 import { getProducts } from "../../services/products";
+import { showError } from "../../utils/toast";
 
 function ItemListContainer({ titulo }) {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,10 @@ function ItemListContainer({ titulo }) {
   useEffect(() => {
     getProducts(category)
       .then((data) => setProducts(data))
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err);
+        showError(err.message);
+      })
       .finally(() => setLoading(false));
   }, [category]);
 

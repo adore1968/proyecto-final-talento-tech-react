@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../services/products";
+import { showError } from "../../utils/toast";
 
 function ItemDetailContainer() {
   const [detail, setDetail] = useState({});
@@ -11,7 +12,10 @@ function ItemDetailContainer() {
   useEffect(() => {
     getProductById(id)
       .then((product) => setDetail(product))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        showError(err.message);
+      });
   }, [id]);
 
   return (

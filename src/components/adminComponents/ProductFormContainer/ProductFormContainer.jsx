@@ -1,14 +1,20 @@
-import { useState } from 'react';
-import { validateProduct } from '../../../utils/validateProducts';
-import { uploadToImgbb } from '../../../services/uploadImage';
-import { createProduct } from '../../../services/products';
-import ProductFormUI from '../ProductFormUI/ProductFormUI';
+import { useEffect, useState } from "react";
+import { validateProduct } from "../../../utils/validateProducts";
+import { uploadToImgbb } from "../../../services/uploadImage";
+import {
+  createProduct,
+  updateProduct,
+  getProductById,
+} from "../../../services/products";
+import ProductFormUI from "../ProductFormUI/ProductFormUI";
+import { useNavigate, useParams } from "react-router-dom";
+import { showSuccess, showError } from "../../../utils/toast";
 
 const productInitialState = {
-  name: '',
-  price: '',
-  category: '',
-  description: '',
+  name: "",
+  price: "",
+  category: "",
+  description: "",
 };
 
 function ProductFormContainer() {
@@ -16,6 +22,20 @@ function ProductFormContainer() {
   const [errors, setErrors] = useState({});
   const [file, setFile] = useState(null);
   const [product, setProduct] = useState(productInitialState);
+
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      getProductById(id)
+        .then((product) => setProduct(product))
+        .catch((err) => {
+          console.log(err);
+          showError(err.message);
+        });
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,22 +54,46 @@ function ProductFormContainer() {
       return;
     }
 
-    try {
-      const imageUrl = await uploadToImgbb(file);
-      const productData = {
-        ...product,
-        price: Number(product.price),
-        imageUrl,
-      };
+    if (id) {
+      try {
+        const imageUrl = await uploadToImgbb(file);
+        const productData = {
+          ...product,
+          price: Number(product.price),
+          imageUrl,
+        };
 
-      await createProduct(productData);
-      alert('Producto cargado con exito');
-      setProduct(productInitialState);
-      setFile(null);
-    } catch (error) {
-      setErrors({ general: error.message });
-    } finally {
-      setLoading(false);
+        await updateProduct(id, productData);
+        showSuccess("Producto actualizado con exito");
+        setProduct(productInitialState);
+        setFile(null);
+        navigate("/");
+      } catch (error) {
+        setErrors({ general: error.message });
+        showError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      try {
+        const imageUrl = await uploadToImgbb(file);
+        const productData = {
+          ...product,
+          price: Number(product.price),
+          imageUrl,
+        };
+
+        await createProduct(productData);
+        showSuccess("Producto cargado con exito");
+        setProduct(productInitialState);
+        setFile(null);
+        navigate("/");
+      } catch (error) {
+        setErrors({ general: error.message });
+        showError(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -61,6 +105,7 @@ function ProductFormContainer() {
       onChange={handleChange}
       onFileChange={setFile}
       onSubmit={handleSubmit}
+      id={id}
     />
   );
 }
