@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getProducts } from "../../services/products";
 import { showError } from "../../utils/toast";
 import Loader from "../Loader";
+import { Helmet } from "react-helmet";
 
 function ItemListContainer({ titulo }) {
   const [products, setProducts] = useState([]);
@@ -39,6 +40,13 @@ function ItemListContainer({ titulo }) {
 
   return (
     <section>
+      <Helmet>
+        <title>Productos - Mi Tienda</title>
+        <meta
+          name="description"
+          content="Explora nuestra variedad de productos."
+        />
+      </Helmet>
       <h1 className="text-center mb-4">{titulo}</h1>
       <ItemList lista={productosPaginados} />
       <div className="d-flex justify-content-center my-4">
