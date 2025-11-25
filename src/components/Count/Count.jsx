@@ -18,23 +18,27 @@ function Count({ btnText, onConfirm }) {
   };
 
   return (
-    <div className="count-container">
-      <div className="count-buttons">
+    <div className="mt-3">
+      <div className="d-flex align-items-center gap-3">
         <button
-          className="btn"
+          className="btn btn-outline-light btn-lg"
           onClick={decrement}
           type="button"
           disabled={count === 0}
         >
           -
         </button>
-        <span>{count}</span>
-        <button className="btn" onClick={increment} type="button">
+        <span className="fs-4 fw-bold">{count}</span>
+        <button
+          className="btn btn-outline-light btn-lg"
+          onClick={increment}
+          type="button"
+        >
           +
         </button>
 
         <button
-          className="btn btn-add"
+          className="btn btn-primary btn-lg mt-3 w-100"
           onClick={confirm}
           type="button"
           disabled={count === 0}

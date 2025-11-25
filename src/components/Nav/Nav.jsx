@@ -6,7 +6,7 @@ function Nav() {
   const { getTotalItems } = useCartContext();
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light px-3 py-2">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 py-2">
       <Link to="/" className="navbar-brand">
         LOGO
       </Link>
@@ -20,7 +20,7 @@ function Nav() {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav ms-auto">
+        <ul className="navbar-nav ms-auto align-items-center d-flex">
           <li className="nav-item">
             <Link to="/" className="nav-link">
               Home

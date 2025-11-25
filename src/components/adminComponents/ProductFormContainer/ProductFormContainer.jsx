@@ -91,8 +91,6 @@ function ProductFormContainer() {
       } catch (error) {
         setErrors({ general: error.message });
         showError(error.message);
-      } finally {
-        setLoading(false);
       }
     }
   };

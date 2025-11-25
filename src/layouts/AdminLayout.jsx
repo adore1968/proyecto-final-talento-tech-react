@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 function AdminLayout() {
   return (
-    <section className='admin-layout'>
+    <main className="container py-4">
       <Outlet />
-    </section>
+    </main>
   );
 }
 

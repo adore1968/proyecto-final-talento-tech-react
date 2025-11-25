@@ -5,9 +5,9 @@ function MainLayout() {
   return (
     <>
       <Header />
-      <div className="main-content">
+      <main className="container py-4">
         <Outlet />
-      </div>
+      </main>
     </>
   );
 }

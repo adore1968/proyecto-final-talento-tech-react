@@ -32,11 +32,19 @@ function ItemDetail({ detail }) {
   return (
     <Item {...detail}>
       {user && (
-        <div>
-          <Link to={`/admin/alta-productos/${detail.id}`}>
+        <div className="d-flex gap-3 mt-3 align-items-center">
+          <Link
+            to={`/admin/alta-productos/${detail.id}`}
+            className="text-success fs-3"
+          >
             <MdEdit />
           </Link>
-          <MdDelete onClick={() => handleDelete(detail.id)} />
+          <button
+            type="button"
+            className="btn p-0 text-danger fs-3 border-0 bg-transparent"
+          >
+            <MdDelete onClick={() => handleDelete(detail.id)} />
+          </button>
         </div>
       )}
       <Count btnText={"Agregar al carrito"} onConfirm={handleAdd} />
